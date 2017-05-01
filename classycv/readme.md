@@ -1,12 +1,13 @@
 # ABOUT
  
-This package provides the LaTeX2e class *classycv* for writing job application documents.
+This package provides the LaTeX2e class *classycv* for writing job applications.
 
 ## FEATURES
 
-* standard letter formats for cover letters (such as DIN-5008 compliant)
-* various commands for layout components such as headings and drawings
-* high level of customization through command and enviroment options as well as custom component defintions
+* various easy-to-use **commands for drawing components** (such as headings with icons, small charts and progress bars)
+* provision of **default components** (for cover letter and resume and their nested components)
+* high level of **customization** (through command and enviroment options as well as custom component defintions)
+* support for **standardized letter formats** for cover letter (such as DIN-5008 compliant letters)
 
 # USAGE
 
@@ -24,11 +25,11 @@ Another option is to add `classycv.cls` as a local class file. The correct way o
 
 In your `<cv-file>.tex` file set the document class to `classycv` using the `\documentclass` command (the options `a4paper, 12pt` for default paper size and default font size are recommended but not required). A simple document created with this class contains
 
-1. a cover letter (using the `CoverLetter` environment)
-2. a resume (using the `Resume` environment)
-3. attachments (using the `attachment` command)
+1. a **cover letter** (using the `CoverLetter` environment)
+2. a **resume** (using the `Resume` environment)
+3. **attachments** (using the `attachment` command)
 
-For example:
+The basic document template looks like this:
 
 ```
 \documentclass[a4paper, 12pt]{classycv}
@@ -36,30 +37,19 @@ For example:
 \begin{document}
 
 %! Cover letter.
-\begin{CoverLetter}[<options?>]{%
-	<submitter-information>
-}{%
-	<recipient-information>
-}{%
-	<subject-line>
-}{%
-	<opening-line>
-}{%
-	<closing-line>
-}
+\begin{CoverLetter}[<options?>]{<submitter-information>}{<recipient-information>}{<subject-line>}{<opening-line>}{<closing-line>}
+<body-text>
 \end{CoverLetter}
 
 %! Resume
-\begin{Resume}[<options?>]{%
-}{%
-}%
+\begin{Resume}[<options>]{<data>}%
 <resume-text>
 \end{Resume}
 
 %! Attachments
-\attachment{<file-1>}
+\attachment[<options>][<name>][<pdf-options>]{<file-1>}
 ...
-\attachment{<file-N>}
+\attachment[<options>][<name>][<pdf-options>]{<file-N>}
 \end{document}
 ```
 
@@ -78,9 +68,78 @@ and the environments
 * `CoverLetter`
 * `Resume`
 
-Depending on environment additional commands become available locally. These are listed in the following subsections
+Depending on environment additional commands become available locally through the use of aliases. These are listed in subsections for the respective command or environment.
 
-### Local commands and environment within `Resume`
+### The `CoverLetter` environment
+
+Basic syntax for this environment is
+
+```
+\begin{CoverLetter}[<options>]{<submitter-information>}{<recipient-information>}{<subject-line>}{<opening-line>}{<closing-line>}
+<body-text>
+\end{CoverLetter}
+```
+
+where `<name>` signifies a code or text place holder.
+
+#### Option keys and meaning
+
+Options keys and their meaning depend on the cover letter format and are shown in the respective section.
+
+### Mandatory arguments
+
+#### First argument (submitter information)
+
+Provides a *pgfkeys* key-val interface (entries of format `<key>=<value>` delimited by commas) to setting submitter information. Example submitter information entries are `name`, `phone` and `email`.
+
+Available keys:
+
+* `title`: submitter title (such as "Dr.")
+* `name`: submitter full name (first and last name)
+* `organisation`: submitter organisation name (such as "Apple Inc.")
+* `position`: submitter job position (such as "CEO")
+* `street`: submitter street name
+* `house`: submitter house number
+* `zipcode`: submitter postal zipcode
+* `city`: submitter city name
+* `country`: submitter country of residence
+* `phone`: submitter landline phone number
+* `mobile`: submitter mobile phone number
+* `fax`: submitter fax number
+* `email`: submitter email address
+* `website`: submitter website address
+* `date`: submission date
+* `attachments`: attachment file names or description
+
+> **Note:** Unless otherwise indicated all values are initially and by default set to `\@empty`. If no value is provided the corresponding lines or components are omitted.
+
+#### Second argument (recipient information)
+
+* `title`: recipient title (such as "Dr.")
+* `name`: recipient full name (first and last name)
+* `organisation`: recipient organisation name (such as "Apple Inc.")
+* `position`: recipient job position (such as "CEO")
+* `street`: recipient street name 
+* `house`: recipient house number
+* `zipcode`: recipient postal zipcode
+* `city`: recipient city name 
+* `counter`: recipient country name
+
+#### Third argument (subject line)
+
+The letter subject such as "Application — Senior Software Developer (m/f)".
+
+#### Fourth argument (opening line)
+
+The letter opening line such as "To who it may concern,".
+
+#### Fifth argument (closing line)
+
+The letter closing line such as "Kind regards,".
+
+### The `Resume` environment
+
+#### Local commands and environments
 
 The commands 
 
