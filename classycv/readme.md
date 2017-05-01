@@ -70,7 +70,7 @@ and the environments
 
 Depending on environment additional commands become available locally through the use of aliases. These are listed in subsections for the respective command or environment.
 
-### The `CoverLetter` environment
+### THE `CoverLetter` ENVIRONMENT
 
 Basic syntax for this environment is
 
@@ -86,11 +86,11 @@ where `<name>` signifies a code or text place holder.
 
 Options keys and their meaning depend on the cover letter format and are shown in the respective section.
 
-### Mandatory arguments
+#### Mandatory arguments
 
-#### First argument (submitter information)
+##### First argument (submitter information)
 
-Provides a *pgfkeys* key-val interface (entries of format `<key>=<value>` delimited by commas) to setting submitter information. Example submitter information entries are `name`, `phone` and `email`.
+Provides a *pgfkeys* key-val interface (entries of format `<key>=<value>` delimited by commas) to setting submitter information. Example submitter information entries  are `title`, `name` and the address values (`street`, `house`, `zipcode`, `city`, `country`).
 
 Available keys:
 
@@ -113,7 +113,11 @@ Available keys:
 
 > **Note:** Unless otherwise indicated all values are initially and by default set to `\@empty`. If no value is provided the corresponding lines or components are omitted.
 
-#### Second argument (recipient information)
+##### Second argument (recipient information)
+
+Provides a *pgfkeys* key-val interface (entries of format `<key>=<value>` delimited by commas) to setting recipient information. Example recipient information entries are `title`, `name` and the address values (`street`, `house`, `zipcode`, `city`, `country`).
+
+Available keys:
 
 * `title`: recipient title (such as "Dr.")
 * `name`: recipient full name (first and last name)
@@ -125,19 +129,41 @@ Available keys:
 * `city`: recipient city name 
 * `counter`: recipient country name
 
-#### Third argument (subject line)
+> **Note:** Unless otherwise indicated all values are initially and by default set to `\@empty`. If no value is provided the corresponding lines or components are omitted.
 
-The letter subject such as "Application — Senior Software Developer (m/f)".
+##### Third argument (subject line)
 
-#### Fourth argument (opening line)
+The letter subject such as 
 
-The letter opening line such as "To who it may concern,".
+> "Application — Senior Software Developer (m/f)"
 
-#### Fifth argument (closing line)
+##### Fourth argument (opening line)
 
-The letter closing line such as "Kind regards,".
+The letter opening line such as 
 
-### The `Resume` environment
+> "To who it may concern,"
+
+##### Fifth argument (closing line)
+
+The letter closing line such as 
+
+> "Kind regards,"
+
+### COVER LETTER FORMATS
+
+#### DIN 5008 A
+
+...
+
+### THE `Resume` ENVIRONMENT
+
+#### Option keys and meanings
+
+...
+
+#### Mandatory arguments
+
+...
 
 #### Local commands and environments
 
@@ -150,3 +176,10 @@ The commands
 * `\doughnut` (draws a doughnut chart with labels)
 
 and the environment `Table` (a wrapper for the environment `tabular` with additional options).
+
+
+#### RESUME FORMATS
+
+##### Thirty Seventy Resume Format
+
+...
