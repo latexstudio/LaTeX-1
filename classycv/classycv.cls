@@ -1,0 +1,1 @@
+/Users/general/Library/texmf/tex/latex/local/classycv.cls

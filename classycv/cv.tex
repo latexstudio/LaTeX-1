@@ -1,0 +1,201 @@
+\documentclass[a4paper, 12pt]{classycv}
+
+%
+%! settings
+%
+
+%! Chose DIN 5008 type A format for the cover letter.
+\classycvSet{/settings/cover letter/format}{din-5008-a}
+%! Chose the thirty seventy format for the resume.
+\classycvSet{/settings/resume/format}{thirty-seventy}
+
+%
+%! document
+%
+\begin{document}
+%
+%! cover letter
+%
+\begin{CoverLetter}[%
+	has body separator=no%
+	, has footer separator=yes%
+	, has page counter=no%
+	, submitter information line color=none%
+	, recipient information line color=none%
+	, recipient information basic style={\robotofamily\normalsize\fontseries{l}\selectfont\color{nearly-black}}
+]{%! submitter information
+	name=Ron Burgundy%
+	, organisation=Channel 4 News%
+	, street=Somestreet%
+	, house=100%
+	, zipcode=10000%
+	, city=San Diego%
+	, country=USA%
+	, phone=+1 619 BIG DEAL%
+	, mobile=+1 GO FOR RON%
+	, website=tiny\-url.\-com/\-kxj8ta9%
+	, email={big.deal@channel4.com}%
+	, date=\today%
+	, attachments={Attachments: The cover of my book, A bust of myself}%
+}{%! recipient information
+	name={Wes Mantooth}%
+	, organisation=Channel 9 News%
+%	, street=some street%
+%	, house=100%
+%	, zipcode=10000%
+%	, country=USA%
+}{%! subject line
+	I'm Ron Burgundy%
+}{%! opening line
+	By the beard of Zeus,%
+}{%! closing line
+	You Stay Classy!%
+}%
+I don't know how to put this, but I'm kind of a big deal. People know me. I'm very important. I have many leather-bound books and my apartment smells of rich mahogany.%
+
+I knew from a very early age that I would be a News Anchorman. I had great hair, for one, which is 70 percent of the job. I also had the pipes.
+
+I don't often talk about it because I don't like to brag but I am a real patriot. I you don't love this country you need to go and spend a half an hour in Canada or Mexico. Here's two countries, literally right next to us, that really blew it.
+\end{CoverLetter}
+%
+%! resume
+%
+\classycvDefineComponent{/resume/left/extra data}{%
+	\pgfkeys{%
+		/classycv/data/resume/Thirty Seventy/options/.cd%
+		, left header style/.get=\headerStyle%
+		, left entry style/.get=\entryStyle%
+	}%
+	\heading[%
+		skip above=2em%
+		, skip below=1em%
+		, basic style=\headerStyle%
+		, has label=yes%
+		, label text={\faSoccerBallO}%
+		, label color=accent-foreground%
+		, label text color=accent-background%
+	]{\MakeUppercase{Hobbies}}%
+	\adjustbox{minipage=[c]{\linewidth-48pt}}{
+		\hspace*{24pt}%
+		\doughnut[%
+			size=\dimexpr0.8\linewidth\relax%
+			, strength=24pt%
+			, label fill color=accent-background!75%
+			, label line color=accent-background!75%
+			, label text color=white%
+			, basic style={\flafamily\fontseries{l}\selectfont}%
+		]{%
+			1/70/accent-background!50%
+			, 2/30/accent-background!40%
+		}%
+		\\%
+		\begin{Table}[%
+			skip above=0em%
+			, skip below=0em%
+			, basic style=\entryStyle%
+			, column format={p{1.5em-\tabcolsep} L{0.5\linewidth-1.5em-2\tabcolsep}}
+		]%
+			\tikz[baseline=(label.base)]{\node[text width=1em, draw, circle, fill=white, text=dark-gray, align=center, inner sep=0pt, outer sep=0pt] (label) {\flafamily\fontseries{l}\selectfont1}} & Jazz Flute
+			\\ \tikz[baseline=(label.base)]{\node[text width=1em, draw, circle, fill=white, text=dark-gray, align=center, inner sep=0pt, outer sep=0pt] (label) {\flafamily\fontseries{l}\selectfont2}} & Breaking Horses
+		\end{Table}%
+	}
+
+}
+\begin{Resume}{%! resume data
+	picture={classy_headshot.jpg}%
+	, name={Ron Burgundy}%
+	, title={Resume}%
+	, street=Somestreet%
+	, house=100%
+	, zipcode=10000%
+	, city=San Diego%
+	, country=USA%
+	, birthdate={1940, Haggleworth, IA}%
+	, marital status={married to my wife and sex friend Veronica Corningstone}%
+	, nationality=true american%
+	, phone=+1 619 BIG DEAL%
+	, mobile=+1 GO FOR RON%
+	, website=tiny\-url.\-com/\-kxj8ta9%
+	, personal data heading text={\MakeUppercase{About Me}}
+	, contact data heading text={\MakeUppercase{Contact}}
+}
+%
+%! education
+%
+\heading[has label=yes, label position=left, label text=\faGraduationCap, label color=accent-background, label text color=accent-foreground, basic style={\flafamily\larger[2]\bfseries\color{accent-background}}, skip above=0em, skip below=1em, skip between=0.5em]{\MakeUppercase{Education}}
+%\bar[skip above=0em, skip below=0em, strength=1pt, width=\linewidth]{accent-background!50}
+\bgroup%
+%\vspace*{1em}\par%
+\begin{stackbox}[l][t]%
+	\textcolor{accent-background}{\mdseries 1954~---~1958}%
+	\\\textbf{High School} (\textit{Our Lady Queen of Chewbacca High School}, Haggleworth, IA)%
+	\\\bigskip%
+	\textcolor{accent-background}{\mdseries 1951~---~one day later in 1951}%
+	\\\textbf{Jazz Flute Training} (\textit{Alley behind Pinky's Inferno}, Haggleworth, IA)%
+\end{stackbox}
+\egroup%
+%
+%! experience
+%
+\heading[has label=yes, label position=left, label text=\faSuitcase, label color=accent-background, label text color=accent-foreground, basic style={\flafamily\larger[2]\bfseries\color{accent-background}}, skip above=2em, skip below=1em, skip between=0.5em]{\MakeUppercase{Work Experience}}
+\bgroup%
+%\vspace*{1em}\par%
+\robotofamily\normalsize\fontseries{l}\selectfont%
+\begin{stackbox}[l][t]%
+	\textcolor{accent-background}{\mdseries rest of the 90's}
+	\\\textbf{Host of ``The Burgundy Journal''} (\textit{PBS})%
+	\\\bigskip
+	\textcolor{accent-background}{\mdseries from early 60's}
+	\\\textbf{Anchorman} (\textit{Channel 4}, San Diego, CA)%
+	\\\bigskip
+	\textcolor{accent-background}{\mdseries from 1958}
+	\\\textbf{Nightly News Anchor} (\textit{WKXM}, Tucson, AZ)%
+	\\\bigskip
+	\textcolor{accent-background}{\mdseries 1958~---~about half a year later}
+	\\\textbf{News Anchor}, (Albuquerque, NM)%
+	\\\textcolor{medium-gray}{I accidentally ended up in Albuquerque instead of Tucson after driving for three weeks without sleeping. I did a great job.}
+	\\\bigskip
+	\textcolor{accent-background}{\mdseries 1951}
+	\\\textbf{Busboy} (\textit{Pinky's Inferno}, Haggleworth, IA)%
+	\\\bigskip
+\end{stackbox}
+\egroup%
+%
+%! skills
+%
+\heading[has label=yes, label position=left, label text=\faWrench, label color=accent-background, label text color=accent-foreground, basic style={\flafamily\larger[2]\bfseries\color{accent-background}}, skip above=2em, skip below=1em, skip between=0.5em]{\MakeUppercase{Skills}}%
+%
+\begin{Table}[column format={*{3}{C{0.33\linewidth-\tabcolsep}}}, skip below=0em]%
+	\stackbox[c]{%
+		\semicircle[strength=3pt, line color=accent-background, has label=yes, label text={Hair}, label font={\small\color{accent-background}}, draw glow=yes]{100}%
+		\\great%
+		\\~
+	}%
+	& 	\stackbox[c]{%
+		\semicircle[strength=3pt,line color=accent-background, has label=yes, label text={\stackbox[c]{Jazz\\Flute}}, label font={\small\color{accent-background}}, draw glow=yes]{100}%
+		\\legendary%%
+		\\~%
+	}%
+	& \stackbox[c]{%
+		\semicircle[strength=3pt, line color=accent-background, has label=yes, label text={Karate}, label font={\small\color{accent-background}}, draw glow=yes]{95}%
+		\\green%
+		\\belt
+	}%
+\end{Table}%
+%
+%! awards
+%
+\heading[has label=yes, label position=left, label text=\faTrophy, label color=accent-background, label text color=accent-foreground, basic style={\flafamily\larger[2]\bfseries\color{accent-background}}, skip above=2em, skip below=1em, skip between=0.5em]{\MakeUppercase{Awards}}%
+%
+\begin{stackbox}[l][t]%
+	\textcolor{accent-background}{\mdseries some time in the 90's}
+	\\\textbf{Golden Anchor Award}%
+	\\\bigskip
+\end{stackbox}
+\end{Resume}
+%
+%! attachments
+%
+\attachment[attachment name=Attachment: The cover of my book][has page counter=no]{classy_book.jpg}%
+\attachment[attachment name=Attachment: A bust of myself][has page counter=no]{classy_bust.jpg}%
+\end{document}
