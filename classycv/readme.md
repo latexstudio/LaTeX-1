@@ -2,10 +2,6 @@
  
 This package provides the LaTeX2e class *classycv* for writing job applications including cover letter and attachment.
 
-## DISCLAIMER
-
-Excerpts from the ebook **Let me off at the top: My classy life and other musings** by **Ron Burgundy** (© 2013, Century) were used under fair use for educational purposes in the example cv "cv.pdf" to illustrate cv generation with *classycv*.
-
 ## FEATURES
 
 * standard letter formats for cover letters (such as DIN-5008 compliant)
@@ -95,7 +91,3 @@ The commands
 * `\doughnut` (draws a doughnut chart with labels)
 
 and the environment `Table` (a wrapper for the environment `tabular` with additional options).
-
-# EXAMPLES
-
-The file `cv.pdf` is compiled from the example cv `cv.tex`.  
