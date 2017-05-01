@@ -183,3 +183,7 @@ and the environment `Table` (a wrapper for the environment `tabular` with additi
 ##### Thirty Seventy Resume Format
 
 ...
+
+### THE `\attachment` COMMAND
+
+...
