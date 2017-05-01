@@ -78,7 +78,7 @@ and the environments
 * `CoverLetter`
 * `Resume`
 
-Depending on environment additional commands are available. These are listed in the following subsections
+Depending on environment additional commands become available locally. These are listed in the following subsections
 
 ### Local commands and environment within `Resume`
 
