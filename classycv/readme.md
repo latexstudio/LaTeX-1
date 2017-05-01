@@ -29,7 +29,7 @@ In your `<cv-file>.tex` file set the document class to `classycv` using the `\do
 2. a **resume** (using the `Resume` environment)
 3. **attachments** (using the `attachment` command)
 
-The basic document template looks like this:
+A template for a basic cv document looks like this:
 
 ```
 \documentclass[a4paper, 12pt]{classycv}
