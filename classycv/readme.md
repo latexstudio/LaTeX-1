@@ -1,6 +1,6 @@
 # ABOUT
  
-This package provides the LaTeX2e class *classycv* for writing job applications including cover letter and attachment.
+This package provides the LaTeX2e class *classycv* for writing job application documents.
 
 ## FEATURES
 
