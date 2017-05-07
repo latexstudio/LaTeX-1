@@ -85,6 +85,8 @@ You can remove any component identified by `<key>` through
 ```
  \classycvDefineComponent{<key>}{}
 ```
+where `<key>` is a placeholder for a component identifier key.
+
 #### Adding a Quote to your Resume
 
 The resume format *Thirty Seventy* defines an initially empty component identified by the key `/resume/left/extra data` which allows you to add something to the left side bar. Adding a quote to the left side bar then is as easy as providing a definition of `/resume/left/extra data`:
