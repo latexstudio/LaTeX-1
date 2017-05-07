@@ -1,10 +1,10 @@
 # ABOUT
  
-This package provides the LaTeX2e class *classycv* for writing job applications.
+This package provides the LaTeX2e class *classycv* for writing job application documents.
 
 ## FEATURES
 
-* various easy-to-use **commands for drawing components** (such as headings with icons, small charts and progress bars)
+* various easy-to-use **commands for drawing components** (such as headings with icons and small charts)
 * provision of **default components** (for cover letter and resume and their nested components)
 * high level of **customization** (through command and enviroment options as well as custom component defintions)
 * support for **standardized letter formats** for cover letter (such as DIN-5008 compliant letters)
@@ -13,23 +13,25 @@ This package provides the LaTeX2e class *classycv* for writing job applications.
 
 ## GETTING STARTED
 
-Simply copy the file 
+Simply copy the file at the path
 
-> classycv.cls
+> source/classycv.cls
 
 into the same folder as your cv folder. 
 
-Another option is to add `classycv.cls` as a local class file. The correct way of adding a local class file depends on your platform and LaTeX distribution. A thorough instruction for multiple platforms/distributions can be found on [Stack Overflow](http://tex.stackexchange.com/questions/1137/where-do-i-place-my-own-sty-or-cls-files-to-make-them-available-to-all-my-te).
+Another option is to add `source/classycv.cls` as a local class file. The correct way of adding a local class file depends on your platform and LaTeX distribution. A thorough instruction for multiple platforms/distributions can be found on [Stack Overflow](http://tex.stackexchange.com/questions/1137/where-do-i-place-my-own-sty-or-cls-files-to-make-them-available-to-all-my-te).
 
 ## CREATING A BASIC CV
 
-In your `<cv-file>.tex` file set the document class to `classycv` using the `\documentclass` command (the options `a4paper, 12pt` for default paper size and default font size are recommended but not required). A simple document created with this class contains
+In your `<file-name>.tex` file set the document class to `classycv` using the `\documentclass` command (the options `a4paper, 12pt` for default paper size and default font size are recommended but not required). 
 
-1. a **cover letter** (using the `CoverLetter` environment)
-2. a **resume** (using the `Resume` environment)
-3. **attachments** (using the `attachment` command)
+A tpyical document created with this class contains
 
-A template for a basic cv document looks like this:
+1. one **cover letter** (using the `CoverLetter` environment)
+2. one **resume** (using the `Resume` environment)
+3. multiple **attachments** (using the `attachment` command)
+
+A template for a basic cv document is given below:
 
 ```
 \documentclass[a4paper, 12pt]{classycv}
@@ -60,7 +62,7 @@ A template for a basic cv document looks like this:
 * `\classycvSet` (set the value of the data entry associated with the given key)
 * `\classycvGet` (get the value of the data entry associated with the given key)
 * `\classycvClear` (clear the value of the data entry associated with the given key)
-* `\classycvDefineComponent` (define a component identified by the given path)
+* `\classycvDefineComponent` (define a component identified by a path)
 * `\attachment`
 
 and the environments
@@ -68,8 +70,31 @@ and the environments
 * `CoverLetter`
 * `Resume`
 
-Depending on environment additional commands become available locally through the use of aliases. These are listed in subsections for the respective command or environment.
+Additional commands become available within environments through local aliases. These are listed in subsections for the respective command or environment.
 
+## CUSTOMIZATION
+
+### THE BASICS
+
+*classycv* provides an **extension** and **modification** mechanism by exposing `\classycvDefineComponent`. This command allows the user to define a custom command for any of the components used by the output creating commands and environments (such as `CoverLetter`, `Resume` and `attachment`).
+
+### EXAMPLE
+
+* you can remove any component identified by `<key>` through
+```
+ \classycvDefineComponent{<key>}{}
+```
+* you can add a quote to a resume format with an extendable left side bar (e.g. *Thirty Seventy*) by
+```
+\classycvDefineComponent{/resume/left/extra data}{%
+	\vspace*{2em}\bar{white}\par
+ 	\adjustbox{margin={12pt 0pt}, minipage=\linewidth-24pt}{
+		{\lmrfamily\larger``La simplicité est la ré\-us\-site ab\-so\-lue.''}
+		
+		\vspace*{1em}--- Frédéric Chopin
+	 }
+}
+```
 ### THE `CoverLetter` ENVIRONMENT
 
 Basic syntax for this environment is
@@ -80,7 +105,7 @@ Basic syntax for this environment is
 \end{CoverLetter}
 ```
 
-where `<name>` signifies a code or text place holder.
+where identifiers in angle brackets (e.g. `<options>`) signify a code or text place holder.
 
 #### Option keys and meaning
 
@@ -135,7 +160,7 @@ Available keys:
 
 The letter subject such as 
 
-> "Application — Senior Software Developer (m/f)"
+> "Application — Senior Software Developer (f/m)"
 
 ##### Fourth argument (opening line)
 
@@ -151,19 +176,34 @@ The letter closing line such as
 
 ### COVER LETTER FORMATS
 
+In general
 #### DIN 5008 A
 
-...
+This cover letter format conforms to the DIN 5008 A letter format (see: https://de.wikipedia.org/wiki/DIN_5008) with a few liberties. 
+
+The format consists of the components
+
+* *header* (key: `/`)
+
+This format positions the address field DIN 5008 (A or B variant) guarantees that the address field is shown in a standard envelope
+
+#### DIN 5008 B
+
+**Note:** (to be added)
+
+##### Options and meaning
+
+**Note:** (to be added)
 
 ### THE `Resume` ENVIRONMENT
 
 #### Option keys and meanings
 
-...
+**Note:** (to be added)
 
 #### Mandatory arguments
 
-...
+**Note:** (to be added)
 
 #### Local commands and environments
 
@@ -175,15 +215,42 @@ The commands
 * `\semicircle` (draws a semicircle with optional label)	
 * `\doughnut` (draws a doughnut chart with labels)
 
-and the environment `Table` (a wrapper for the environment `tabular` with additional options).
+and the environments 
 
+* `Table` (a wrapper for the environment `tabular` with additional options).
+* `Entry` (for a simple entry in a chronological cv)
+
+are provided locally within the `Resume` environment.
 
 #### RESUME FORMATS
 
-##### Thirty Seventy Resume Format
+##### **Thirty Seventy** Resume Format
 
-...
+**Note:** (to be added)
 
 ### THE `\attachment` COMMAND
 
-...
+**Note:** (to be added)
+
+# EXAMPLES
+
+All examples may be found in the folder `examples` of this repository.
+
+## BRITISH EUROPASS CV EXAMPLE
+
+This cv example is located at `examples/cv_gb.pdf` and is compiled from the source file `examples/cv_gb.tex`. 
+
+The example pdf used as a template is provided by the *European Unions* organisation *Europass* and can be found at https://europass.cedefop.europa.eu/sites/default/files/cv-example-2-en-gb.pdf. 
+
+Example output is shown in the sections below.
+
+### COVER LETTER
+![British Europass CV Example Cover Letter First Page](https://raw.githubusercontent.com/classysoftware/LaTeX/master/classycv/examples/cover_letter_1.png "British Europass CV Example Cover Letter First Page")
+![British Europass CV Example Cover Letter Second Page](https://raw.githubusercontent.com/classysoftware/LaTeX/master/classycv/examples/cover_letter_2.png "British Europass CV Example Cover Letter Second Page")
+
+### FIRST PAGE OF RESUME
+![British Europass CV Example Resume First Page](https://raw.githubusercontent.com/classysoftware/LaTeX/master/classycv/examples/resume_1.png "British Europass CV Example Resume First Page")
+
+### ATTACHMENT
+![British Europass CV Example Attachment](https://raw.githubusercontent.com/classysoftware/LaTeX/master/classycv/examples/attachment_1.png "British Europass CV Example Cover Attachment")
+
