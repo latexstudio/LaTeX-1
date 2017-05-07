@@ -78,6 +78,8 @@ Additional commands become available within environments through local aliases. 
 
 *classycv* provides an **extension** and **modification** mechanism by exposing `\classycvDefineComponent`. This command allows the user to define a custom command for any of the components used by the output creating commands and environments (such as `CoverLetter`, `Resume` and `attachment`).
 
+Components are identified by *keys* (e.g. `/cover letter/header` identifies the the component creating the header of the cover letter). The keys reflect the logical structure of the document. Defining a component identified by `<key>` changes the command used for creating the output. This allows in-depth customization.
+
 ### EXAMPLES
 
 #### Removing a Component
@@ -185,21 +187,38 @@ The letter closing line such as
 ### COVER LETTER FORMATS
 
 In general
+
 #### DIN 5008 A
+
+##### General Information
 
 This cover letter format conforms to the DIN 5008 A letter format (see: https://de.wikipedia.org/wiki/DIN_5008) with a few liberties. 
 
-The format consists of the components
+DIN 5008 A format positions the address field such that the address field is shown in the window of a standard german "Großbrief" envelope. 
 
-* *header* (key: `/`)
+##### Components
 
-This format positions the address field DIN 5008 (A or B variant) guarantees that the address field is shown in a standard envelope
+The format uses the following components:
+
+* *header* (creates the cover letter header; key: `/cover letter/header`, default: yes)
+* *footer* (creates cover letter footer; key: `/cover letter/footer`, default: yes)
+* *recipient information* (creates the cover letter recipient information, e.g. the address lines; key: `/cover letter/recipient information`, default: yes)
+* *submnitter information* (creates the cover letter submitter information usable for additional information not contained within the header; key: `/cover letter/submitter information`, default: no)
+* *subject* (creates the subject line in the letter body; key: `/cover letter/subject`, default: yes)
+* *date* (creates the date line in the letter body; key: `/cover letter/date`, default: yes)
+* *opening* (creates the opening line in the letter body; key: `/cover letter/opening`, default: yes)
+* *closing* (creates the closing line in the letter body; key: `/cover letter/closing`, default: yes)
+* *attachments* (creates the attachments line in the letter footer; key: `/cover letter/attachments`, default: yes)
+
+##### Options and Meaning
+
+**Note:** (to be added)
 
 #### DIN 5008 B
 
 **Note:** (to be added)
 
-##### Options and meaning
+##### Options and Meaning
 
 **Note:** (to be added)
 
