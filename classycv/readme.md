@@ -13,13 +13,13 @@ This package provides the LaTeX2e class *classycv* for writing job application d
 
 ## GETTING STARTED
 
-Simply copy the file at the path
+Create a folder for your cv (not required but recommended). Simply copy the file at the path
 
-> source/classycv.cls
+> LaTeX/classycv/source/classycv.cls
 
-into the same folder as your cv folder. 
+within the *LaTeX* repository into the same folder. Then create a cv file `<file-name>.tex` and follow the instructions in the section below.
 
-Another option is to add `source/classycv.cls` as a local class file. The correct way of adding a local class file depends on your platform and LaTeX distribution. A thorough instruction for multiple platforms/distributions can be found on [Stack Overflow](http://tex.stackexchange.com/questions/1137/where-do-i-place-my-own-sty-or-cls-files-to-make-them-available-to-all-my-te).
+**Note:** Another option is to add `source/classycv.cls` as a local class file. The correct way of adding a local class file depends on your platform and LaTeX distribution. A thorough instruction for multiple platforms/distributions can be found on [Stack Overflow](http://tex.stackexchange.com/questions/1137/where-do-i-place-my-own-sty-or-cls-files-to-make-them-available-to-all-my-te).
 
 ## CREATING A BASIC CV
 
@@ -78,13 +78,16 @@ Additional commands become available within environments through local aliases. 
 
 *classycv* provides an **extension** and **modification** mechanism by exposing `\classycvDefineComponent`. This command allows the user to define a custom command for any of the components used by the output creating commands and environments (such as `CoverLetter`, `Resume` and `attachment`).
 
-### EXAMPLE
+### EXAMPLES
 
-* you can remove any component identified by `<key>` through
+#### Removing a Component
+You can remove any component identified by `<key>` through
 ```
  \classycvDefineComponent{<key>}{}
 ```
-* you can add a quote to a resume format with an extendable left side bar (e.g. *Thirty Seventy*) by
+#### Adding a Quote to your Resume
+
+The resume format *Thirty Seventy* defines an initially empty component identified by the key `/resume/left/extra data` which allows you to add something to the left side bar. Adding a quote to the left side bar then is as easy as providing a definition of `/resume/left/extra data`:
 ```
 \classycvDefineComponent{/resume/left/extra data}{%
 	\vspace*{2em}\bar{white}\par
@@ -95,6 +98,9 @@ Additional commands become available within environments through local aliases. 
 	 }
 }
 ```
+
+**Note:** The definition has to be put before the call to the `Resume` environment which is supposed to add the component.
+
 ### THE `CoverLetter` ENVIRONMENT
 
 Basic syntax for this environment is
@@ -136,7 +142,7 @@ Available keys:
 * `date`: submission date
 * `attachments`: attachment file names or description
 
-> **Note:** Unless otherwise indicated all values are initially and by default set to `\@empty`. If no value is provided the corresponding lines or components are omitted.
+**Note:** Unless otherwise indicated all values are initially and by default set to `\@empty`. If no value is provided the corresponding lines or components are omitted.
 
 ##### Second argument (recipient information)
 
@@ -154,7 +160,7 @@ Available keys:
 * `city`: recipient city name 
 * `counter`: recipient country name
 
-> **Note:** Unless otherwise indicated all values are initially and by default set to `\@empty`. If no value is provided the corresponding lines or components are omitted.
+**Note:** Unless otherwise indicated all values are initially and by default set to `\@empty`. If no value is provided the corresponding lines or components are omitted.
 
 ##### Third argument (subject line)
 
