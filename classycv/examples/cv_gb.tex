@@ -1,0 +1,179 @@
+%
+%! English CV example.
+%! Adopted from an example british cv on the Europass website ([1]). Job application details from a real job posting at allianz.co.uk ([2]).
+%!href[1] https://europass.cedefop.europa.eu/sites/default/files/cv-example-2-en-gb.pdf
+%!href[2] https://careers.peopleclick.eu.com/careerscp/client_allianz/external/jobDetails.do?functionName=getJobDetail&jobPostId=12755&localeCode=en-us
+%
+\documentclass[a4paper, 12pt]{classycv}
+
+%
+%! dependencies
+%
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{blindtext}
+\usepackage{multirow, colortbl}
+\usepackage{soul}
+
+%
+%! document
+%
+\begin{document}
+
+%! Cover letter.
+\begin{CoverLetter}[%
+	submitter information line color=none%
+	, recipient information line color=none%
+	, has body separator=no%
+	, has footer separator=no%
+]{%
+	%! submitter information
+	name=Ann Other%
+	, street=The Street%
+	, house=1%
+	, city=London%
+	, zipcode=AB12 3CD%
+	, country=United Kingdom%
+	, phone=+44 1234567890%
+	, mobile=+44 0987654321%
+	, email=ann.other@address.com%
+	, attachments={Attachments: reference skills passport, EM Skills Passport}
+}{%
+	%! recipient information
+	, organisation=Allianz Guildford (HQ)%
+	, street=Ladymead%
+	, house=57%
+	, zipcode=GU1 1DB%
+	, city=Guildford%
+}{Application Senior Underwriter --- Personal Lines --- Motor (Job ID: 5462)}{To whom it may concern,}{Kind regards,}%
+\blindtext[1]%
+
+\blindtext[2]%
+
+\blindtext[1]%
+\end{CoverLetter}
+%
+%! Resume
+%
+\begin{Resume}{%
+	name=Ann Other%
+	, title=Resume%
+	, birthdate={01/01/1980}%
+	, nationality=british%
+	, phone=+44 1234567890%
+	, mobile=+44 0987654321%
+	, email=ann.\-other\-@ad\-dress.\-com%
+	, personal data heading text={\MakeUppercase{About Me}}
+	, contact data heading text={\MakeUppercase{Contact}}
+}
+%
+%! experience
+%
+\heading[has label=yes, label position=left, label text=\faSuitcase, label color=accent-background, skip above=2em, skip below=0em, skip between=0.5em]{\MakeUppercase{Work Experience}}
+%
+\begin{Entry}[skip above=2em]{2009 --- Present}{\textbf{Underwriter}~(\textit{Brown and Williams Insurers}, London, UK)}
+Manager of underwriting team at local branch of leading insurance company, responsibilities include:
+	\begin{itemize}
+		\item Managing staff in the underwriting team.
+		\item Analysing application forms to establish credit worthiness of clients.
+		\item Allocating applications appropriately within the underwriting team and process insurance applications in complex cases.
+		\item Ensuring compliance with relevant company policy, regulations and/or legislation. - Providing relevant training to junior underwriters.
+	\end{itemize}
+\end{Entry}
+%
+\begin{Entry}[skip above=2em]{March 2007 --- June 2009}{\textbf{Junior Underwriter} (\textit{Clarke and Philips Insurance}, London, UK)}
+As a junior underwriter at this large insurance firm, main duties included:
+\begin{itemize}
+	\item Assisting senior underwriters to evaluate application forms from individuals based on standard underwriting strategies and policies
+	\item Calculating risk in accordance with company policies.
+	\item Communicating with other staff within the company and explaining the reasons for decision reached on applications.
+\end{itemize}%
+\hspace*{\fill}\textcolor{accent-background}{Related document(s):} reference skills passport.pdf
+\end{Entry}
+%
+\begin{Entry}[skip above=2em]{September 2004 – June 2005}{\textbf{Year in industry} (B. S., Munich, Germany)}
+During a year in industry as part of BSc studies, worked at investment bank and securities firm. Duties included:
+\begin{itemize}
+	\item General administration in various departments.
+	\item Shadowing underwriters and other staff within the insurance section.
+	\item Telephone work, and responding to client questions via telephone and email.
+\end{itemize}
+\hspace*{\fill}\textcolor{accent-background}{Related document(s):} EM Skills Passport.PDF
+\end{Entry}
+%
+%! education
+%
+\newpage%
+\heading[has label=yes, label position=left, label text=\faGraduationCap, label color=accent-background, skip above=2em, skip below=0em, skip between=0.5em]{\MakeUppercase{Education}}
+%
+\begin{Entry}[skip above=2em]{September 2001~---~June 2006}{\textbf{Bachelor of Science in Mathematics} (\textit{Bournemouth University}, Bournemouth, UK)}
+Subjects included: Pure Maths, Statistics, Queueing Theory, Applied Maths%
+
+\hspace*{\fill}\textcolor{accent-background}{Related document(s):} DS Label Holder Example.pdf%
+\end{Entry}
+%
+\begin{Entry}[skip above=2em]{September 1999~---~June 2001}{\textbf{A-Levels} (\textit{Awarding Body}, London, UK)}%
+\begin{Table}[column format={R{0.5\linewidth-2\tabcolsep} L{0.5\linewidth-2\tabcolsep}}, basic style={\lmrfamily\normalsize\color{dark-gray}}]
+Mathematics & Grade A
+\\Physics & Grade B
+\\Economics & Grade A
+\end{Table}
+{\robotofamily\fontseries{l}\selectfont\textbf{General Certificate of Secondary Education} (GCSE, \textit{Awarding Body}, London, UK)}
+\begin{Table}[column format={>{\raggedleft}M{0.25\linewidth-2\tabcolsep} M{0.25\linewidth-2\tabcolsep} >{\raggedleft}M{0.25\linewidth-2\tabcolsep} M{0.25\linewidth-2\tabcolsep}}, basic style={\lmrfamily\normalsize\color{dark-gray}}]
+Biology & Grade A & Geography & Grade B
+\\Chemistry & Grade B & German & Grade A
+\\Economics & Grade A* & History & Grade B
+\\English Language & Grade A* & Mathematics & Grade A*
+\\English Literature & Grade A* & Physics & Grade A*
+\\Further Mathematics & Grade A* & French & Grade B
+\end{Table}
+\end{Entry}
+%
+%! skills
+%
+\newpage
+\heading[has label=yes, label position=left, label text=\faWrench, label color=accent-background, skip above=2em, skip below=1em, skip between=0.5em]{\MakeUppercase{Personal Skills}}
+\begin{Entry}[topic line style={\robotofamily\bfseries\normalsize}, skip above=0em, skip between=0.5em, skip below=0em]{}{Mother tongue(s):}English\end{Entry}
+\begin{Entry}[topic line style={\robotofamily\bfseries\normalsize}, skip above=2em, skip between=0.5em, skip below=0em]{}{Other languages:}
+\setlength{\arrayrulewidth}{2pt}%%
+\arrayrulecolor{light-gray}
+%
+\begin{Table}[column format={C{0.15\linewidth-2\tabcolsep-\arrayrulewidth} *{5}{C{0.17\linewidth-2\tabcolsep-\arrayrulewidth}}}, stretch=1.5, basic style={\lmrfamily\small\color{dark-gray}}]
+\cline{2-6} & \multicolumn{2}{M{0.3\linewidth-2\tabcolsep-\arrayrulewidth}|}{\textcolor{accent-background}{\MakeUppercase{understanding}}} & \multicolumn{2}{M{0.3\linewidth-2\tabcolsep-\arrayrulewidth}|}{\textcolor{accent-background}{\MakeUppercase{speaking}}} & \multicolumn{1}{L{0.17\linewidth-2\tabcolsep-\arrayrulewidth}}{\textcolor{accent-background}{\MakeUppercase{writing}}}
+\\\cline{2-6} & Listening & Reading & Spoken interaction & Spoken production &
+\\\cline{2-6} German & B1 & B2 & B1 & B1 & B2
+\\\cline{2-6} & \multicolumn{5}{>{\cellcolor{nearly-white}}C{0.84\linewidth-2\tabcolsep}}{GCSE German}
+\\\cline{2-6} French & B1 & B1 & B2 & B2 & B1
+\\\cline{2-6} & \multicolumn{5}{>{\cellcolor{nearly-white}}C{0.84\linewidth-2\tabcolsep}}{GCSE French}
+\\\cline{2-6}
+& \multicolumn{5}{L{0.84\linewidth-2\tabcolsep}}{\textcolor{accent-background}{\footnotesize Levels: A1/A2: Basic user - B1/B2: Independent user - C1/C2: Proficient user}}
+\\ & \multicolumn{5}{L{0.84\linewidth-2\tabcolsep}}{\textcolor{accent-background}{\footnotesize\href{http://europass.cedefop.europa.eu/en/resources/european-language-levels-cefr}{\ul{Common European Framework of Reference for Languages}}}}
+\end{Table}
+\end{Entry}
+%
+\begin{Entry}[topic line style={\robotofamily\bfseries\normalsize}, skip above=0em, skip between=0.5em, skip below=0em]{}{Communication Skills}
+\begin{itemize}
+	\item Excellent verbal and written communication skills both in an office environment and with external
+stakeholders.
+	\item Experienced at giving presentations to large audiences.
+	\item Good telephone manner
+\end{itemize}
+\end{Entry}
+%
+\begin{Entry}[topic line style={\robotofamily\bfseries\normalsize}, skip above=2em, skip between=0.5em, skip below=0em]{}{Organisational/ managerial skills}
+Excellent organisational and prioritisation skills.
+\end{Entry}
+%
+\begin{Entry}[topic line style={\robotofamily\bfseries\normalsize}, skip above=2em, skip between=0.5em, skip below=0em]{}{Computer skills}
+Proficient with Microsoft Office programmes, Outlook, Internet Explorer and Project.
+Also competent with sector specific software packages.
+\end{Entry}
+\end{Resume}
+%
+%! Attachments
+%
+\attachment[attachment name=Attachment: DS Label Holder Example][][height=0.85\paperheight]{ds_label_holder_example}
+\attachment[attachment name=Attachment: EM Skills Passport][][height=0.85\paperheight]{europass}
+\attachment[attachment name=Attachment: Reference Skills Passport][has page counter=no][width=0.85\paperwidth]{reference_skill_passport}
+\end{document}

@@ -1,4 +1,11 @@
 %
+%! TODOS
+%!
+%! * add more cover letter and resume formats (e.g. DIN 5008 B, american style cover letter)
+%! * generalize options for specific cover letter and resume types
+%
+
+%
 %! A LaTeX2e class for writing applications. 
 %
 \NeedsTeXFormat{LaTeX2e}
@@ -11,9 +18,10 @@
 \ProcessOptions
 \LoadClass{article}
 
-%!%!%!%!%!%!%!%!
-% dependencies %
-%!%!%!%!%!%!%!%!
+%
+%! DEPENDENCIES
+%
+
 %
 %!note For `\DeclareUnicodeCharacter`
 %
@@ -45,7 +53,7 @@
 \RequirePackage{marvosym}
 %!note For `\href`.
 \RequirePackage[hidelinks]{hyperref}
-%!note For `\colorlet`.
+%!note For `\colorlet` as well as colored table rows and columns (option `table`).
 \RequirePackage{xcolor}
 %!note For `\includegraphics`.
 \RequirePackage{graphicx}
@@ -81,9 +89,9 @@
 %!note For boolean macros and `\ifthenelse`.
 \RequirePackage{ifthen}
 
-%!%!%!%!%!%!%
-% variables %
-%!%!%!%!%!%!%
+%
+%! VARIABLES
+%
 
 %!old \newsavebox{\classycv@Resume@PutEntry@savebox}
 
@@ -146,18 +154,18 @@
 \newif\ifresume
 	\resumefalse
 
-%!%!%!%!%!%!
-% commands %
-%!%!%!%!%!%!
+%
+%! COMMANDS
+%
 
 \makeatletter
 
-% % % % %
-% basic %
-% % % % %
+%
+%! 1. basic 
+%
 
 %
-%! font selection
+%! 1.1 font selection
 %
 \newcommand{\cmrfamily}{\fontfamily{cmr}\selectfont}
 \newcommand{\lmrfamily}{\fontfamily{lmr}\selectfont}
@@ -166,7 +174,7 @@
 \newcommand{\berafamily}{\fontfamily{fve}\selectfont}
 
 %
-%! strings
+%! 1.2 strings
 %
 
 %! Intersperse all characters within the second given string with the first given string.
@@ -188,7 +196,7 @@
 }
 
 %
-%! decoration
+%! 1.3 decoration
 %
 \newcommand{\classycv@wrapWithCircle}[2][]{%
 %! Were optional arguments given?
@@ -226,6 +234,120 @@
   \fi%
 }
 
+%
+%! 1.4 colors
+%
+
+\definecolor{nearly-black}{RGB}{10, 10, 10}
+\definecolor{nearly-white}{RGB}{245, 245, 245}
+\definecolor{light-gray}{RGB}{200, 200, 200}
+\definecolor{medium-gray}{RGB}{127, 127, 127}
+\definecolor{dark-gray}{RGB}{55, 55, 55}
+\definecolor{accent-background}{RGB}{48, 84, 128}
+\definecolor{accent-foreground}{RGB}{248, 48, 54}
+%
+%! 2. classycv commands
+%
+
+%
+%! 2.1 classycv constants
+%
+\newcommand{\classycv@FORMAT@COVERLETTER@DINLETTERA}{din-5008-a}
+%!tmp \newcommand{\classycv@FORMAT@COVERLETTER@DINLETTERB}{din-5008-b}
+%!tmp \newcommand{\classycv@FORMAT@RESUME@TWENTYEIGHTY}{twenty-eighty}
+\newcommand{\classycv@FORMAT@RESUME@THIRTYSEVENTY}{thirty-seventy}
+%!tmp \newcommand{\classycv@FORMAT@RESUME@FOURTYSIXTY}{fourty-sixty}
+
+%
+%! 2.2 public interface
+%
+
+\providecommand{\classycvSet}[2]{\pgfkeyssetvalue{/classycv/data#1}{#2}}
+\providecommand{\classycvGet}[2]{\pgfkeysvalueof{/classycv/data#1}}
+\providecommand{\classycvClear}[2]{\pgfkeyssetvalue{/classycv/data#1}{\@empty}}
+
+%
+%! Define a component.
+%
+\providecommand{\classycvDefineComponent}[2]{%
+	\@namedef{/classycv/components#1}{#2}%
+}
+
+%
+% Cover letter environment.
+%!todo optional parameter
+%
+\newenvironment{CoverLetter}[6][]{%
+	%! Check if this was called within a cover letter environment
+	\ifcoverletter\errmessage{Terminal error: detected invalid nested cover letter environment}\else\fi%
+	\coverlettertrue%
+	%! Increase the cover letter counter
+	\stepcounter{classycv@coverLetterCounter}%
+	%! Reset the cover letter page counter
+	\setcounter{classycv@coverLetterPageCounter}{0}%
+	%! Label the first page
+	\label{cover-letter-\theclassycv@coverLetterCounter-first-page}%
+	%! switch for the letter format
+	\pgfkeys{/classycv/data/settings/cover letter/format/.get=\classycv@format}%
+	\ifnum\pdf@strcmp{\classycv@format}{\classycv@FORMAT@COVERLETTER@DINLETTERA}=\z@%
+		%! DIN 5008 A format
+		\begin{classycv@PutCoverLetterDINLetterA}[#1]{#2}{#3}{#4}{#5}{#6}%
+	\else%
+		%!...
+		%! invalid letter format
+		\ClassWarning{classycv}{! undefined letter format (\classycv@format)}%
+	\fi%
+}{%
+	%! switch for the letter format
+	\pgfkeys{/classycv/data/settings/cover letter/format/.get=\classycv@format}%
+	\ifnum\pdf@strcmp{\classycv@format}{\classycv@FORMAT@COVERLETTER@DINLETTERA}=\z@%
+		%! DIN 5008 A format
+		\end{classycv@PutCoverLetterDINLetterA}%
+	\fi%
+	%! Label the last page
+	\label{cover-letter-\theclassycv@coverLetterCounter-last-page}%
+	%! Reset cover letter flag
+	\coverletterfalse%
+}
+
+%
+% Resume environment.
+%
+\newenvironment{Resume}[2][]{%
+	%! Check if this was called within a resume environment
+	\ifresume\errmessage{Terminal error: detected invalid nested resume environment}\else\fi%
+	\resumetrue%
+	%! aliase component creating commands
+	\LetLtxMacro\semicircle\classycv@PutSemicircle%
+	\LetLtxMacro\doughnut\classycv@PutDoughnutChart%
+%!tmp	\LetLtxMacro\star\classycv@PutStar%
+	\LetLtxMacro\progress\classycv@PutProgressBar%
+	\LetLtxMacro\heading\classycv@PutHeading%
+	\LetLtxMacro\bar\classycv@PutBar%
+	\LetLtxMacro{\Table}\classycv@PutTable%
+	\LetLtxMacro{\endTable}\endclassycv@PutTable%
+	\LetLtxMacro{\Entry}\classycv@PutResumeEntry%
+	\LetLtxMacro{\endEntry}\endclassycv@PutResumeEntry%
+	%! switch for the resume format
+	\pgfkeys{/classycv/data/settings/resume/format/.get=\classycv@format}%
+	\ifnum\pdf@strcmp{\classycv@format}{\classycv@FORMAT@RESUME@THIRTYSEVENTY}=\z@%
+		%! Thirty Seventy resume format
+		\begin{classycv@PutResumeThirtySeventy}[#1]{#2}%
+	\else%
+		%! invalid resume format
+		\ClassWarning{classycv}{! undefined letter format (\classycv@format)}%
+	\fi%
+}{%
+	%! switch for the letter format
+	\pgfkeys{/classycv/data/settings/resume/format/.get=\classycv@format}%
+	\ifnum\pdf@strcmp{\classycv@format}{\classycv@FORMAT@RESUME@THIRTYSEVENTY}=\z@%
+		%! Thirty Seventy resume format
+		\end{classycv@PutResumeThirtySeventy}%
+	\fi%
+	%! Reset resume flag
+	\resumefalse%
+}
+
 %! Single page attachment.
 \DeclareDocumentCommand{\attachment}{O{} O{} O{} m}{%
 	\bgroup%
@@ -252,46 +374,9 @@
 	\egroup%
 }
 
-% % % % % %
-% colors  %
-% % % % % %
-
-\definecolor{nearly-black}{RGB}{10, 10, 10}
-\definecolor{nearly-white}{RGB}{245, 245, 245}
-\definecolor{light-gray}{RGB}{200, 200, 200}
-\definecolor{medium-gray}{RGB}{127, 127, 127}
-\definecolor{dark-gray}{RGB}{55, 55, 55}
-%\definecolor{accent-background}{RGB}{24, 42, 64}%! almost navy blue
-\definecolor{accent-background}{RGB}{48, 84, 128}
-%\definecolor{accent-foreground}{RGB}{24, 242, 196}
-\colorlet{accent-foreground}{nearly-white}
-
-% % % % % % %
-% classycv  %
-% % % % % % %
-
 %
-%! constants
+%! 2.2 private interface
 %
-\newcommand{\classycv@FORMAT@COVERLETTER@DINLETTERA}{din-5008-a}
-\newcommand{\classycv@FORMAT@COVERLETTER@DINLETTERB}{din-5008-b}
-\newcommand{\classycv@FORMAT@RESUME@TWENTYEIGHTY}{twenty-eighty}
-\newcommand{\classycv@FORMAT@RESUME@THIRTYSEVENTY}{thirty-seventy}
-\newcommand{\classycv@FORMAT@RESUME@FOURTYSIXTY}{fourty-sixty}
-
-%
-% Set, get and clear cv data
-%
-\providecommand{\classycvSet}[2]{\pgfkeyssetvalue{/classycv/data#1}{#2}}
-\providecommand{\classycvGet}[2]{\pgfkeysvalueof{/classycv/data#1}}
-\providecommand{\classycvClear}[2]{\pgfkeyssetvalue{/classycv/data#1}{\@empty}}
-
-%
-% Define a component.
-%
-\providecommand{\classycvDefineComponent}[2]{%
-	\@namedef{/classycv/components#1}{#2}%
-}
 
 %
 %! Put CV data.
@@ -559,6 +644,9 @@
 	\egroup%
 }
 
+%
+%! Put a table block.
+%
 \newenvironment{classycv@PutTable}[1][]{%
 	\bgroup%
 	\pgfkeys{/classycv/data/put table/options/.cd, #1}%
@@ -585,42 +673,42 @@
 }
 
 %
-% Cover letter environment.
-%!todo optional parameter
+%! Put a resume entry with standard format.
+%!
+%! A standard format resume entry consists of three parts:
+%!	1. date line
+%!	2. topic line
+%!	3. free text
+%!
+%! The environment takes an optional parameter and mandatory parameter for date line and topic line. The content of the environment body is being output as the free text part.
+%!
+%! Parameter:
+%! #1: options (optional)
+%! #2: date line text
+%! #3: topic line text
 %
-\newenvironment{CoverLetter}[6][]{%
-	%! Check if this was called within a cover letter environment
-	\ifcoverletter\errmessage{Terminal error: detected invalid nested cover letter environment}\else\fi%
-	\coverlettertrue%
-	%! Increase the cover letter counter
-	\stepcounter{classycv@coverLetterCounter}%
-	%! Reset the cover letter page counter
-	\setcounter{classycv@coverLetterPageCounter}{0}%
-	%! Label the first page
-	\label{cover-letter-\theclassycv@coverLetterCounter-first-page}%
-	%! switch for the letter format
-	\pgfkeys{/classycv/data/settings/cover letter/format/.get=\classycv@format}%
-	\ifnum\pdf@strcmp{\classycv@format}{\classycv@FORMAT@COVERLETTER@DINLETTERA}=\z@%
-		%! DIN 5008 A format
-		\begin{classycv@PutCoverLetterDINLetterA}[#1]{#2}{#3}{#4}{#5}{#6}%
-	\else%
-		%!...
-		%! invalid letter format
-		\ClassWarning{classycv}{! undefined letter format (\classycv@format)}%
-	\fi%
+\newenvironment{classycv@PutResumeEntry}[3][]{%
+	\bgroup%
+	\pgfkeys{/classycv/data/put resume entry/options/.cd, #1}%
+	\pgfkeys{%
+		/classycv/data/put resume entry/options/.cd%
+		, width/.get=\width%
+		, basic style/.get=\basicStyle%
+		, date line style/.get=\dateLineStyle%
+		, topic line style/.get=\topicLineStyle%
+		, skip above/.get=\skipAbove%
+		, skip between/.get=\skipBetween%
+		, skip below/.get=\skipBelow%
+	}%
+	\vspace*{\skipAbove}\par%
+	\basicStyle%
+	{\dateLineStyle{#2}\par}%
+	{\topicLineStyle{#3}\par}%
+	\vspace*{\skipBetween}\par%
 }{%
-	%! switch for the letter format
-	\pgfkeys{/classycv/data/settings/cover letter/format/.get=\classycv@format}%
-	\ifnum\pdf@strcmp{\classycv@format}{\classycv@FORMAT@COVERLETTER@DINLETTERA}=\z@%
-		%! DIN 5008 A format
-		\end{classycv@PutCoverLetterDINLetterA}%
-	\fi%
-	%! Label the last page
-	\label{cover-letter-\theclassycv@coverLetterCounter-last-page}%
-	%! Reset cover letter flag
-	\coverletterfalse%
+	\vspace*{\skipBelow}\par%
+	\egroup%
 }
-
 
 %
 %! A DIN 5008 type A conformant cover letter
@@ -681,7 +769,7 @@
 			\draw[draw=none, use as bounding box] rectangle (\linewidth, \baselineskip);
 			\coordinate (P1) at ($([shift={(25mm, 0)}]current bounding box.north west)$);%
 			\coordinate (P2) at ($([shift={(-20mm, 0)}]current bounding box.north east)$);%
-			\draw[accent-background] (P1) -- (P2);%
+			\draw[accent-foreground] (P1) -- (P2);%
 		}\par%
 	\else%
 		\vspace*{\classycv@baselineskip@default}\par
@@ -822,7 +910,7 @@
 		\ifnum\pdf@strcmp{yes}{\hasFooterSeparator}=\z@%
 			\coordinate (P1) at ($([shift={(25mm, -4.23mm)}]current bounding box.north west)$);%
 			\coordinate (P2) at ($([shift={(-20mm, -4.23mm)}]current bounding box.north east)$);%
-			\draw[accent-background] (P1) -- (P2);
+			\draw[accent-foreground] (P1) -- (P2);
 		\fi%
 		%! Footer content node.
 		\node[below right=\dimexpr4.23mm + \baselineskip\relax and 25mm of current bounding box.north west, text width=\dimexpr\textwidth - 45mm\relax, inner sep=0pt, outer sep=0pt] (footer) {%
@@ -887,7 +975,7 @@
 	\basicStyle
 	\vspace*{\classycv@baselineskip@default}%
 	\ifnum\pdf@strcmp{\@empty}{\organisation}=\z@\else{\organisationStyle\organisation}\fi%
-	\ifnum\pdf@strcmp{\@empty}{\name}=\z@\else\\{\nameStyle\name}\fi%
+	\ifnum\pdf@strcmp{\@empty}{\name}=\z@\else\\{\nameStyle\title~\name}\fi%
 	\ifnum\pdf@strcmp{\@empty}{\position}=\z@\else\\{\positionStyle\position}\fi%
 	\ifnum\pdf@strcmp{\@empty}{\street}=\z@\else\\{\addressStyle\street~\house}\fi%
 	\ifnum\pdf@strcmp{\@empty}{\zipcode}=\z@\else\\{\addressStyle\zipcode~\city}\fi%
@@ -1019,62 +1107,8 @@
 }
 
 %
-%!todo more cover letter formats
-%
-
-%
-% Resume environment.
-%
-\newenvironment{Resume}[2][]{%
-	%! Check if this was called within a resume environment
-	\ifresume\errmessage{Terminal error: detected invalid nested resume environment}\else\fi%
-	\resumetrue%
-	%! aliase component creating commands
-	\LetLtxMacro\semicircle\classycv@PutSemicircle%
-	\LetLtxMacro\doughnut\classycv@PutDoughnutChart%
-%!tmp	\LetLtxMacro\star\classycv@PutStar%
-	\LetLtxMacro\progress\classycv@PutProgressBar%
-	\LetLtxMacro\heading\classycv@PutHeading%
-	\LetLtxMacro\bar\classycv@PutBar%
-	\LetLtxMacro{\Table}\classycv@PutTable%
-	\LetLtxMacro{\endTable}\endclassycv@PutTable%
-	%! switch for the resume format
-	\pgfkeys{/classycv/data/settings/resume/format/.get=\classycv@format}%
-	\ifnum\pdf@strcmp{\classycv@format}{\classycv@FORMAT@RESUME@FOURTYSIXTY}=\z@%
-		%! Fourty Sixty resume format
-		\begin{classycv@PutResumeFourtySixty}[#1]{#2}%
-	\else%
-	\ifnum\pdf@strcmp{\classycv@format}{\classycv@FORMAT@RESUME@THIRTYSEVENTY}=\z@%
-		%! Thirty Seventy resume format
-		\begin{classycv@PutResumeThirtySeventy}[#1]{#2}%
-	\else%
-	\ifnum\pdf@strcmp{\classycv@format}{\classycv@FORMAT@RESUME@TWENTYEIGHTY}=\z@%
-		%! Twenty Eighty resume format
-		\begin{classycv@PutResumeTwentyEighty}[#1]{#2}%
-	\else
-		%! invalid resume format
-		\ClassWarning{classycv}{! undefined letter format (\classycv@format)}%
-	\fi\fi\fi%
-}{%
-	%! switch for the letter format
-	\pgfkeys{/classycv/data/settings/resume/format/.get=\classycv@format}%
-	\ifnum\pdf@strcmp{\classycv@format}{\classycv@FORMAT@RESUME@FOURTYSIXTY}=\z@%
-		%! Fourty Sixty resume format
-		\end{classycv@PutResumeFourtySixty}%
-	\else
-	\ifnum\pdf@strcmp{\classycv@format}{\classycv@FORMAT@RESUME@THIRTYSEVENTY}=\z@%
-		%! Thirty Seventy resume format
-		\end{classycv@PutResumeThirtySeventy}%
-	\else
-	\ifnum\pdf@strcmp{\classycv@format}{\classycv@FORMAT@RESUME@TWENTYEIGHTY}=\z@%
-		%! Twenty Eighty resume format
-		\end{classycv@PutResumeTwentyEighty}%
-	\fi\fi\fi%
-	%! Reset resume flag
-	\resumefalse%
-}
-
 %! Fourty Sixty resume format.
+%
 \newenvironment{classycv@PutResumeFourtySixty}[2][]{%
 	\bgroup%
 	%! Set data
@@ -1135,9 +1169,9 @@
 	%! Get data
 	\pgfkeys{/classycv/data/resume/Thirty Seventy/name/.get=\name}%
 	%! Put component
-	\Huge\color{accent-foreground}\MakeUppercase{\name}\par%
+	\Huge\color{nearly-white}\MakeUppercase{\name}\par%
 	%! Put delimiter
-	\classycv@Resume@PutDelimiter{accent-foreground}%
+	\classycv@Resume@PutDelimiter{nearly-white}%
 }
 
 %! Thirty Seventy resume format.
@@ -1240,10 +1274,10 @@
 %		, left heading style/.get=\leftHeadingStyle%
 %		, left entry style/.get=\leftEntryStyle%		
 	}%
-
 	\leftStyle%
 	%! Put optional picture.
 	\ifnum\pdf@strcmp{\@empty}{\picture}=\z@%
+		\vspace*{4em}\par%
 	\else%
 		\classycv@PutComponent{/resume/left/picture}%
 	\fi%
@@ -1294,34 +1328,19 @@
 %
 \newcommand{\classycv@PutResumeThirtySeventy@left@personalDataComponent}{%
 	\bgroup%
-%	\classycv@PutBar[skip above=2em, skip below=2em, strength=1pt]{accent-foreground!20!accent-background}%
 	\pgfkeys{/classycv/data/resume/Thirty Seventy/personal data heading text/.get=\text}%
 	%! Put picture
 	%!todo refactor into components
 	\pgfkeys{%
 		/classycv/data/resume/Thirty Seventy/.cd%
-%		, picture/.get=\picture%
-%		, name/.get=\name%
-%		, title/.get=\title%
-%		, street/.get=\street%
-%		, house/.get=\house%
-%		, zipcode/.get=\zipcode%
-%		, city/.get=\city%
 		, birthdate/.get=\birthdate%
 		, marital status/.get=\status%
 		, nationality/.get=\nationality%
-%		, phone/.get=\phone%
-%		, mobile/.get=\mobile%
-%		, email/.get=\email%
-%		, website/.get=\website%
-%		, personal data heading text/.get=\personalDataHeadingText%
-%		, contact data heading text/.get=\contactDataHeadingText%
 	}%
 	\pgfkeys{%
 		/classycv/data/resume/Thirty Seventy/options/.cd%
 		, left header style/.get=\leftHeaderStyle%
-		, left entry style/.get=\leftEntryStyle%		
-%		, left additional personal data/.get=\additional%
+		, left entry style/.get=\leftEntryStyle%
 	}%
 	%
 	%! Put personal data
@@ -1333,7 +1352,7 @@
 		, label text={\faUser}%
 		, skip above=2em%
 		, skip below=0em%
-		, label color=accent-foreground%
+		, label color=nearly-white%
 		, label text color=accent-background%
 		, basic style=\leftHeaderStyle%
 	] {\text}
@@ -1396,7 +1415,7 @@
 		, label text={\faComments}%
 		, skip above=2em%
 		, skip below=0em%
-		, label color=accent-foreground%
+		, label color=nearly-white%
 		, label text color=accent-background%
 		, basic style=\leftHeaderStyle%
 	] {\text}
@@ -1470,7 +1489,7 @@
             \node[rotate=90, inner sep=0pt, outer sep=0pt, minimum width=\paperheight, minimum height=0.3\paperwidth, text width=\paperheight, anchor=north west, align=center, text=\fg] {%
                 \pgfkeys{/classycv/data/resume/Thirty Seventy/name/.get=\name}%
                 \bgroup%
-                    \color{accent-foreground}\bfseries\fontsize{84pt}{92pt}\selectfont\name%
+                    \color{nearly-white}\bfseries\fontsize{84pt}{92pt}\selectfont\name%
                 \egroup%
             };%
         }%
@@ -1527,7 +1546,7 @@
 		%! Put the heading
 		\classycv@tResume@heading[\raggedleft][\smallskip][]{\color{light-gray}\normalsize\faUser}%
 		%! Put the delimiter
-		\classycv@Resume@PutDelimiter[\linewidth][10pt][2pt]{accent-foreground}%
+		\classycv@Resume@PutDelimiter[\linewidth][10pt][2pt]{nearly-white}%
 		%! Put content table
 		\setlength{\tabcolsep}{0pt}%
 		\begin{tabularx}{\linewidth}{M{24pt} X}%
@@ -1557,7 +1576,7 @@
 		%! Put heading
 		\classycv@Resume@PutHeading[\raggedleft][][]{\color{light-gray}\normalsize\faCommentsO}%
 		%! Put delimiter
-		\classycv@Resume@PutDelimiter[\linewidth][10pt][2pt]{accent-foreground}%
+		\classycv@Resume@PutDelimiter[\linewidth][10pt][2pt]{nearly-white}%
 		%! Put content table
 		\setlength{\tabcolsep}{0pt}
 		\begin{tabularx}{\linewidth}{M{24pt} X}
@@ -1580,9 +1599,9 @@
 	%! Get data
 	\pgfkeys{/classycv/data/resume/Thirty Seventy/name/.get=\name}%
 	%! Put component
-	\Huge\color{accent-foreground}\MakeUppercase{\name}\par%
+	\Huge\color{nearly-white}\MakeUppercase{\name}\par%
 	%! Put delimiter
-	\classycv@Resume@PutDelimiter{accent-foreground}%
+	\classycv@Resume@PutDelimiter{nearly-white}%
 }
 
 %
@@ -1669,8 +1688,6 @@
 	, color/.default=accent-foreground%
 	, strength/.initial=2pt%
 	, strength/.default=2pt%
-%	, basic style/.initial={\robotofamily\normalsize\fontseries{l}\selectfont\color{accent-foreground}}%
-%	, basic style/.default={\robotofamily\normalsize\fontseries{l}\selectfont\color{accent-foreground}}%
 	, skip above/.initial=1em%
 	, skip above/.default=1em%	
 	, skip below/.initial=2em%
@@ -1795,14 +1812,14 @@
 	, label width/.default=1.25em%
 	, label color/.initial=accent-background%
 	, label color/.default=accent-background%
-	, label frame color/.initial=accent-foreground%
-	, label frame color/.default=accent-foreground%
+	, label frame color/.initial=accent-background%
+	, label frame color/.default=accent-background%
 	, label frame width/.initial=0pt%
 	, label frame width/.default=0pt%
 	, label inner sep/.initial=4pt%
 	, label inner sep/.default=4pt%
-	, label text color/.initial=accent-foreground%
-	, label text color/.default=accent-foreground%
+	, label text color/.initial=nearly-white%
+	, label text color/.default=nearly-white%
 	, label position/.initial=left%
 	, label position/.default=left%
 	, label options/.initial=\@empty%
@@ -1820,7 +1837,7 @@
 }
 
 %
-%! `\classycv@PutTable` options
+%! `classycv@PutTable` environment options
 %
 \pgfkeys{%
 	/classycv/data/put table/options/.cd%
@@ -1835,9 +1852,32 @@
 %	, alignment/.initial=c%
 %	, alignment/.default=c%
 	, skip above/.initial=1em%
-	, skip above/.default=1em%	
+	, skip above/.default=1em%
 	, skip below/.initial=2em%
 	, skip below/.default=2em%	
+}
+
+%
+%! `classycv@PutResumeEntry` environment options
+%
+\pgfkeys{%
+	/classycv/data/put resume entry/options/.cd%
+	, width/.initial=\dimexpr\linewidth-24pt\relax%
+	, width/.default=\dimexpr\linewidth-24pt\relax%
+	, basic style/.initial={\lmrfamily\normalsize\color{dark-gray}}%
+	, basic style/.default={\lmrfamily\normalsize\color{dark-gray}}%
+	, date line style/.initial={\robotofamily\normalsize\bfseries\color{accent-background}}
+	, date line style/.default={\robotofamily\normalsize\bfseries\color{accent-background}}
+	, topic line style/.initial={\robotofamily\normalsize\fontseries{l}\selectfont\color{nearly-black}}
+	, topic line style/.default={\robotofamily\normalsize\fontseries{l}\selectfont\color{nearly-black}}
+%	, alignment/.initial=c%
+%	, alignment/.default=c%
+	, skip above/.initial=1em%
+	, skip above/.default=1em%
+	, skip between/.initial=1em%
+	, skip between/.default=1em%
+	, skip below/.initial=0em%
+	, skip below/.default=0em%	
 }
 
 %
@@ -2061,8 +2101,8 @@
 
 \pgfkeys{%
 	/classycv/data/resume/Thirty Seventy/options/.cd%
-	, left basic style/.initial={\robotofamily\fontseries{l}\selectfont\small\color{accent-foreground}}%
-	, left basic style/.default={\robotofamily\fontseries{l}\selectfont\small\color{accent-foreground}}%
+	, left basic style/.initial={\robotofamily\fontseries{l}\selectfont\small\color{nearly-white}}%
+	, left basic style/.default={\robotofamily\fontseries{l}\selectfont\small\color{nearly-white}}%
 	, left background color/.initial=accent-background%
 	, left background color/.default=accent-background%
 	, left foreground color/.initial=nearly-white%
